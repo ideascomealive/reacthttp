@@ -9,11 +9,13 @@ import './Blog.css';
 class Blog extends Component {
     state = {
         posts: [],
-        selectedPostId: null
+        selectedPostId: null,
+        error: false //added state value to respond in the UI to errors
     }
 
     componentDidMount() {
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        //simulate error - wrong url
+        axios.get('https://jsonplaceholder.typicode.com/content')
         .then( response => { 
             const posts = response.data.slice(0, 4);
             const updatedPosts = posts.map(post => {
@@ -23,6 +25,10 @@ class Blog extends Component {
                 }
             });
             this.setState({posts: updatedPosts});
+        })
+        .catch(error => {
+            console.log(error);
+            this.setState({error: true});
         });
     }
 
@@ -30,14 +36,17 @@ class Blog extends Component {
         this.setState({selectedPostId: id});
     }
     render () {
-        const posts = this.state.posts.map(post => {
-            return <Post 
-            key={post.id} 
-            title={post.title} 
-            author={post.author}
-            clicked={() => this.postClickedHandler(post.id)}
-            />;
-        });
+        let posts = <p style={{textAlign: 'center'}}>Something went horribly wrong</p>
+        if (!this.state.error) {
+            posts = this.state.posts.map(post => {
+                return <Post 
+                key={post.id} 
+                title={post.title} 
+                author={post.author}
+                clicked={() => this.postClickedHandler(post.id)}
+                />;
+            });
+        } 
 
         return (
             <div>

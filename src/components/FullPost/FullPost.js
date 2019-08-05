@@ -7,16 +7,20 @@ class FullPost extends Component {
     state = {
         currentPost: null
     }
-    //added state to manage currentPost
 
-    //componentDidUpdate added to get full post from id
+    // the infinite loop was created because we update state inside an update handler
     componentDidUpdate() {
         if (this.props.id) {
-            axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
-            .then(response => {
-                console.log(response);
-                this.setState({currentPost: response.data});
-            });
+            //added new condition to test for new currentPost before axios call
+            //if we don't have a current post OR (if we have a currentPost AND the id's are different)
+            if ( !this.state.currentPost || (this.state.currentPost && this.state.currentPost.id !== this.props.id )) {
+                axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+                .then(response => {
+                    console.log(response);
+                    this.setState({currentPost: response.data});
+                });
+            }
+            
 
         }
     }
@@ -24,12 +28,10 @@ class FullPost extends Component {
     render () {
         let post = <p style={{textAlign: 'center'}}>Please select a Post!</p>;
         
-        //handle first error: the prop.id is available before the axios request finishes
         if (this.props.id) {
             post = <p style={{textAlign: 'center'}}>Please select a Post!</p>;
         }
 
-        //change the condition to this.state.currentPost to make sure the axios request is complete
         if (this.state.currentPost) {
             post = (
                 <div className="FullPost">

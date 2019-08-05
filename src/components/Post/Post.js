@@ -4,7 +4,8 @@ import './Post.css';
 
 const post = (props) => (
     <article className="Post">
-        <h1>Title</h1>
+    {/*Change hardcoded title to props.title */}
+        <h1>{props.title}</h1>
         <div className="Info">
             <div className="Author">Author</div>
         </div>

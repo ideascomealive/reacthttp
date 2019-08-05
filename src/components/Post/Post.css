@@ -1,5 +1,5 @@
 .Post {
-    width: 100px;
+    width: 250px; /* change width to accommodate title */
     padding: 16px;
     text-align: center;
     border: 1px solid #eee;

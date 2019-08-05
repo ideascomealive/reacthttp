@@ -11,7 +11,6 @@ class Blog extends Component {
         posts: [],
         selectedPostId: null
     }
-    //added selectedPostId and set initial value to null
 
     componentDidMount() {
         axios.get('https://jsonplaceholder.typicode.com/posts')
@@ -27,7 +26,6 @@ class Blog extends Component {
         });
     }
 
-    //added postClickHandler which will take the clicked id and setState
     postClickedHandler = (id) => {
         this.setState({selectedPostId: id});
     }
@@ -37,7 +35,7 @@ class Blog extends Component {
             key={post.id} 
             title={post.title} 
             author={post.author}
-            clicked={() => this.postClickedHandler(post.id)} //send clicked method to post component
+            clicked={() => this.postClickedHandler(post.id)}
             />;
         });
 

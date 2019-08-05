@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+//import axios into Blog container
+import axios from 'axios';
 
 import Post from '../../components/Post/Post';
 import FullPost from '../../components/FullPost/FullPost';
@@ -6,6 +8,14 @@ import NewPost from '../../components/NewPost/NewPost';
 import './Blog.css';
 
 class Blog extends Component {
+
+    //added componentDidMount lifecycle
+    componentDidMound() {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(response => {
+            console.log(response);
+        });
+    }
     render () {
         return (
             <div>

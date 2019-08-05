@@ -9,7 +9,6 @@ class NewPost extends Component {
         author: 'Jim'
     }
 
-    //add a handler to create and post data using axios
     postDataHandler = () => {
         const data = {
             title: this.state.title,
@@ -35,7 +34,6 @@ class NewPost extends Component {
                     <option value="Jim">Jim</option>
                     <option value="Snarf">Snarf</option>
                 </select>
-                {/* add a onClick event listener*/}
                 <button onClick={this.postDataHandler}>Add Post</button>
             </div>
         );

@@ -14,23 +14,28 @@ class Blog extends Component {
     componentDidMount() {
         axios.get('https://jsonplaceholder.typicode.com/posts')
         .then( response => { 
-            //we can safely use setState inside the .then
-            this.setState({posts: response.data});
-            console.log(response);
+            //limit the number of posts to 4 using slice
+            const posts = response.data.slice(0, 4);
+            //add author data to the posts (not available in jsonplaceholder)
+            const updatedPosts = posts.map(post => {
+                return {
+                    ...post,
+                    author: 'Jim'
+                }
+            });
+            //use updatedPosts to setState
+            this.setState({posts: updatedPosts});
         });
     }
 
     render () {
-        //create a const to hold our mapped posts
-        //then pass in some props like title and key
         const posts = this.state.posts.map(post => {
-            return <Post key={post.id} title={post.title} />
+            return <Post key={post.id} title={post.title} author={post.author}/>
         });
-        
+
         return (
             <div>
                 <section className="Posts">
-                {/* Output the posts const */}
                     {posts}
                 </section>
                 <section>
